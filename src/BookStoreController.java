@@ -16,7 +16,7 @@ public class BookStoreController
     {
         this.model = model;
         this.view = view;
-        model.addBook(new Book("Book1","Author1")); // добавляем несколько елементов в магазин книг
+        model.addBook(new Book("Book1","Author1")); // добавляем несколько елементов
         model.addBook(new Book("Book2","Author2"));
         controllerWork();
     }
