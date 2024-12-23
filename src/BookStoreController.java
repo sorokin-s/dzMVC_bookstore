@@ -70,7 +70,7 @@ public class BookStoreController
     public void findInBookStore(String name) //метод поиск книги по названию
     {
         if(model.findBook(name)!=null)view.displayMessage("Найдена: "+model.findBook(name).toString());
-        else view.displayMessage(name+" не найдена");
+       else view.displayMessage(name+" не найдена");
     }
     public void addInBookStore(String name_author) //метод добавление книги в магазин
     {   String name,author;
@@ -92,14 +92,18 @@ public class BookStoreController
         {   name = t.getFirst();
             author = t.getLast();
             Book book = new Book(name,author);
-            if(model.bookMap.remove(new Book(name,author))!=null)view.displayMessage(book+ "удалена");
+            if(model.deleteBook(new Book(name,author)))view.displayMessage(book+ "удалена");
             else view.displayMessage(book+" не была удалена т.к. не была надена");
         }else view.displayMessage("Некорректно введённые данные" );
 
     }
     public void displayBookStore()      // метод просмотра списка всех книг
     {
-        view.displayBookList(model.bookMap);
+        for(Book book :model.books)
+        {
+            view.displayBookList(book.toString()+" количество: "+ model.bookMap.get(book.hashCode()));
+        }
+//        view.displayBookList(model.bookMap.toString());
     }
 
 }

@@ -2,23 +2,35 @@ import java.util.*;
 
 public class BookStore {
 
-    HashMap<Book,Integer> bookMap= new HashMap<>();
+    HashMap<Integer, Integer> bookMap= new HashMap<>();// для хранения значения колиичества уникальных книг
+    ArrayList<Book> books = new ArrayList<>(); // для хранения всех книг
 
     public void addBook(Book book)        // добавляем книги в магазин
-    {  int numUniqueBooks=1;              // переменная для учёта количества
-                                          // одинаковых книг (здесь это не реализовано)
-       bookMap.put(book,numUniqueBooks);
-    }
-    public int  deleteBook(Book book)   // удаляем книгу из магазина
     {
-      return bookMap.remove(book);
+        if(bookMap.containsKey(book.hashCode()))
+            bookMap.put(book.hashCode(),bookMap.get(book.hashCode())+1);
+        else {books.add(book); bookMap.put(book.hashCode(),1);}
     }
+
+    public boolean  deleteBook(Book book)   // удаляем книгу из магазина
+    {
+        if(bookMap.get(book.hashCode())>1)
+           {
+               bookMap.put(book.hashCode(),bookMap.get(book.hashCode())-1); return true;
+           }
+        else
+        {
+            bookMap.remove(book.hashCode());
+            return books.removeIf(b ->b.equals(book));
+        }
+    }
+
     public Book findBook(String name)    // ищем книгу в магазине по названию
     {
-     Optional<Book> book = bookMap.keySet()
-               .parallelStream()
-               .filter(b->b.getName().equals(name) )
-               .findAny();
+        Optional<Book> book=  books.parallelStream()
+                .filter(b->b.getName().equals(name))
+                .findAny();
         return book.orElse(null);
+
     }
 }

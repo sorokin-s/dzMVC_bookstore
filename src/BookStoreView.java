@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BookStoreView
@@ -11,9 +12,9 @@ public class BookStoreView
                 "и потом вводите данные если требуется)\n");
     }
 
-    public void displayBookList(HashMap<Book,Integer> hashMap) // выводим список всех книг
+    public void displayBookList(String strBook) // выводим список всех книг
     {
-        hashMap.forEach((map,k)->System.out.println(map.toString()));
+       System.out.println(strBook);
     }
     public void displayMessage(String reply)
     {
